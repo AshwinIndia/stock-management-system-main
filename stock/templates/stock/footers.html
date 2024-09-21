@@ -1,0 +1,92 @@
+{% load static %}
+<!-- JavaScript -->
+<script src="{% static 'js/bundle.js' %}"></script>
+<script src="{% static 'js/scrumboard.js' %}"></script>
+<script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+
+<script>
+    // Hard-code country, state, and city options for offline usage
+
+    // Static mapping of country to states
+    const countryStateMapping = {
+        'Country1': ['State1', 'State2', 'State3'],
+        'Country2': ['StateA', 'StateB'],
+        'Country3': ['StateX', 'StateY', 'StateZ']
+    };
+
+    // Static mapping of state to cities
+    const stateCityMapping = {
+        'State1': ['City1', 'City2'],
+        'State2': ['CityA', 'CityB'],
+        'State3': ['CityX', 'CityY'],
+        'StateA': ['CityM', 'CityN'],
+        'StateB': ['CityP', 'CityQ'],
+        'StateX': ['CityR', 'CityS'],
+        'StateY': ['CityT', 'CityU'],
+        'StateZ': ['CityV', 'CityW']
+    };
+
+    // Populate state dropdown based on selected country
+    $("#id_country").change(function () {
+        const countryId = $(this).val();  // Get selected country
+        const states = countryStateMapping[countryId];  // Get corresponding states
+
+        // Clear previous states and cities
+        $("#id_state").empty();
+        $("#id_city").empty();
+
+        if (states) {
+            // Add new state options
+            states.forEach(state => {
+                $("#id_state").append(`<option value="${state}">${state}</option>`);
+            });
+        }
+    });
+
+    // Populate city dropdown based on selected state
+    $("#id_state").change(function () {
+        const stateId = $(this).val();  // Get selected state
+        const cities = stateCityMapping[stateId];  // Get corresponding cities
+
+        // Clear previous cities
+        $("#id_city").empty();
+
+        if (cities) {
+            // Add new city options
+            cities.forEach(city => {
+                $("#id_city").append(`<option value="${city}">${city}</option>`);
+            });
+        }
+    });
+</script>
+
+<script src="{% static 'js/all.js' %}"></script>
+<script src="{% static 'js/jquery-ui-1.12.1/jquery-ui.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        $(".datetimeinput").datepicker({changeYear: true,changeMonth: true, dateFormat: 'yy-mm-dd'});
+    });
+</script>
+
+<script src="{% static 'js/paging.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        $('.table').paging({limit:15});
+    });
+</script>
+
+<script>
+    var CurURL = window.location.href, urlSplit = CurURL.split("#");
+    var $nav_link = $(".nk-menu-link, .menu-link, .nav-link");
+    if ($nav_link.length > 0) {
+        $nav_link.each(function() {
+            if (CurURL === (this.href) && (urlSplit[1]!=="")) {
+                $(this).closest("li").addClass("active").parent().closest("li").addClass("active");
+            }
+        });
+    }
+</script>
+<script src="{% static 'js/scripts.js' %}"></script>
+
+</body>
+</html>
